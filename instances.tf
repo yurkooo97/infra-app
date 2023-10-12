@@ -20,7 +20,7 @@
 
 resource "aws_instance" "Bastion" {
 
-  ami = "ami-088e71edb8795252f"
+  ami = "ami-065ab11fbd3d0323d"
 
   instance_type = var.instance_type_free
 
@@ -65,7 +65,7 @@ resource "aws_instance" "Bastion" {
 
 resource "aws_instance" "Frontend" {
 
-  ami = "ami-088e71edb8795252f"
+  ami = "ami-065ab11fbd3d0323d"
 
   instance_type = var.instance_type_free
 
@@ -83,7 +83,7 @@ resource "aws_instance" "Frontend" {
 
 resource "aws_instance" "Backend" {
 
-  ami = "ami-0427a796a4e582276"
+  ami = "ami-065ab11fbd3d0323d"
 
   instance_type = var.instance_type_medium
 
