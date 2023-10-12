@@ -1,0 +1,16 @@
+---
+- name: Update all packages
+  dnf:
+    name: '*'
+    state: latest
+
+- name: Install Docker
+  dnf:
+    name: docker
+    state: present
+
+- name: Start and enable Docker service
+  service:
+    name: docker
+    state: started
+    enabled: yes

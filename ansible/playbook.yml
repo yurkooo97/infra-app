@@ -1,0 +1,6 @@
+---
+- name: install docker
+  hosts: aws_ec2
+  become: yes
+  roles:
+    - docker_setup
