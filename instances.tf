@@ -83,7 +83,7 @@ resource "aws_instance" "Frontend" {
 
 resource "aws_instance" "Backend" {
 
-  ami = "ami-088e71edb8795252f"
+  ami = "ami-0427a796a4e582276"
 
   instance_type = var.instance_type_medium
 
