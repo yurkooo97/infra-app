@@ -65,7 +65,7 @@ resource "aws_instance" "Bastion" {
 
 resource "aws_instance" "Frontend" {
 
-  ami = "ami-065ab11fbd3d0323d"
+  ami = "ami-0427a796a4e582276"
 
   instance_type = var.instance_type_free
 
@@ -83,13 +83,13 @@ resource "aws_instance" "Frontend" {
 
 resource "aws_instance" "Backend" {
 
-  ami = "ami-065ab11fbd3d0323d"
+  ami = "ami-0427a796a4e582276"
 
   instance_type = var.instance_type_medium
 
   key_name = aws_key_pair.bastion_auth.key_name
 
-  subnet_id = element(aws_subnet.subnet_private[*].id, 0)
+  subnet_id = element(aws_subnet.subnet_public[*].id, 0)
 
   vpc_security_group_ids = [aws_security_group.backend_cg.id]
 
