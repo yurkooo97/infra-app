@@ -7,7 +7,7 @@ data "aws_availability_zones" "working" {}
 
 
 locals {
-  cidr_block = "192.168.0.0/25"
+  cidr_block = "192.168.0.0/24"
   az_count   = length(data.aws_availability_zones.working.names)
 
   bastion_ports = [{
@@ -23,7 +23,7 @@ locals {
     }, {
     description = "SSH",
     port        = 22,
-    cidr_blocks = ["192.168.0.0/25"],
+    cidr_blocks = ["192.168.0.0/24"],
     }, {
     description = "HTTPS",
     port        = 443,
@@ -33,7 +33,7 @@ locals {
   backend_ports = [{
     description = "SSH",
     port        = 22,
-    cidr_blocks = ["192.168.0.0/25"],
+    cidr_blocks = ["192.168.0.0/24"],
     }, {
     description = "App",
     port        = 8080,
@@ -229,7 +229,7 @@ resource "aws_security_group" "project_cg_rds" {
     from_port   = 3306
     to_port     = 3306
     protocol    = "tcp"
-    cidr_blocks = ["192.168.0.0/25"]
+    cidr_blocks = ["192.168.0.0/24"]
   }
   egress {
     from_port   = 0
