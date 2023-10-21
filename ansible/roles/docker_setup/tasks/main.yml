@@ -1,11 +1,11 @@
 ---
 - name: Update all packages
-  dnf:
+  yum:
     name: '*'
     state: latest
 
 - name: Install Docker
-  dnf:
+  yum:
     name: docker
     state: present
 
