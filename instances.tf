@@ -31,7 +31,7 @@ resource "aws_instance" "Bastion" {
   vpc_security_group_ids = [aws_security_group.bastion_cg.id]
 
   provisioner "file" {
-    source      = "/home/yura/test_git/infra-app/ansible"
+    source      = "/home/yura/infra-test/infra-app/ansible"
     destination = "/home/ec2-user/"
 
     connection {
