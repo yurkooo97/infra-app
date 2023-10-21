@@ -54,7 +54,7 @@ resource "aws_instance" "Bastion" {
     }
   }
 
-  user_data = templatefile("bastion_install.sh", {})
+  user_data = templatefile("./ansible/bastion_install.sh", {})
 
   tags = {
     Name = "Bastion"

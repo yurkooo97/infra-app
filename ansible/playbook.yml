@@ -9,3 +9,13 @@
   become: yes
   roles:
     - aws_cli_setup
+
+- name: Send and execute stop_rm_containers
+  hosts: aws_ec2
+  tasks:
+    - name: Copy bash script to remote hosts
+      copy:
+        src: /home/ec2-user/ansible/stop_rm_containers.sh
+        dest: /home/ec2-user/stop_rm_containers.sh
+        mode: '0775'
+
