@@ -1,4 +1,14 @@
 ---
+- name: Create directory
+  file:
+    path: /home/ec2-user/.aws
+    state: directory
+    mode: '0755'
+- name: Create empty file
+  file:
+    path: /home/ec2-user/.aws/config
+    state: touch
+    mode: '0644'    
 - name: Install unzip (AWS CLI dependency)
   yum:
     name: unzip
