@@ -4,11 +4,6 @@
   become: yes
   roles:
     - docker_setup
-- name: install aws cli
-  hosts: aws_ec2
-  become: yes
-  roles:
-    - aws_cli_setup
 
 - name: Send and execute stop_rm_containers
   hosts: aws_ec2
