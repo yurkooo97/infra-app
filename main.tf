@@ -25,4 +25,10 @@ resource "aws_key_pair" "bastion_auth" {
 
 }
 
+data "aws_iam_instance_profile" "aws_ec2_full_access" {
+  name = "AWS_EC2_FullAccess"
+}
 
+data "aws_iam_instance_profile" "ecr_role" {
+  name = "ecr_role"
+}

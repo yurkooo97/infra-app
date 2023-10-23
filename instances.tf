@@ -28,6 +28,8 @@ resource "aws_instance" "Bastion" {
 
   subnet_id = element(aws_subnet.subnet_public[*].id, 0)
 
+  iam_instance_profile = data.aws_iam_instance_profile.aws_ec2_full_access.name
+
   vpc_security_group_ids = [aws_security_group.bastion_cg.id]
 
   provisioner "file" {
@@ -71,7 +73,9 @@ resource "aws_instance" "Frontend" {
 
   key_name = aws_key_pair.bastion_auth.key_name
 
-  subnet_id = element(aws_subnet.subnet_public[*].id, 0)
+  subnet_id = element(aws_subnet.subnet_private[*].id, 0)
+
+  iam_instance_profile = data.aws_iam_instance_profile.ecr_role.name
 
   vpc_security_group_ids = [aws_security_group.frontend_cg.id]
 
@@ -89,7 +93,9 @@ resource "aws_instance" "Backend" {
 
   key_name = aws_key_pair.bastion_auth.key_name
 
-  subnet_id = element(aws_subnet.subnet_public[*].id, 0)
+  subnet_id = element(aws_subnet.subnet_private[*].id, 0)
+
+  iam_instance_profile = data.aws_iam_instance_profile.ecr_role.name
 
   vpc_security_group_ids = [aws_security_group.backend_cg.id]
 
@@ -130,6 +136,55 @@ resource "aws_db_instance" "db" {
 
 }
 
+# resource "aws_lb_listener" "frontend_http" {
+#   load_balancer_arn = aws_lb.alb.arn
+#   port              = "80"
+#   protocol          = "HTTP"
+
+#   default_action {
+#     type = "fixed-response"
+
+#     fixed_response {
+#       content_type = "text/plain"
+#       message_body = "Hello from HTTP listener!"
+#       status_code  = "200"
+#     }
+#   }
+# }
+
+# resource "aws_lb_listener" "backend_http" {
+#   load_balancer_arn = aws_lb.alb.arn
+#   port              = "8080"
+#   protocol          = "HTTP"
+
+#   default_action {
+#     type = "fixed-response"
+
+#     fixed_response {
+#       content_type = "text/plain"
+#       message_body = "Hello from HTTP listener!"
+#       status_code  = "200"
+#     }
+#   }
+# }
+
+# resource "aws_lb_listener" "front_end_https" {
+#   load_balancer_arn = aws_lb.my_alb.arn
+#   port              = "443"
+#   protocol          = "HTTPS"
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+#   certificate_arn   = "your-acm-certificate-arn" # Update with your ACM certificate ARN
+
+#   default_action {
+#     type = "fixed-response"
+
+#     fixed_response {
+#       content_type = "text/plain"
+#       message_body = "Hello from HTTPS listener!"
+#       status_code  = "200"
+#     }
+#   }
+# }
 
 output "bastion_ip" {
   value = aws_instance.Bastion.public_ip

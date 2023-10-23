@@ -34,3 +34,15 @@ variable "instance_type_medium" {
 #   default     = ["22, 8080"]
 #   type        = list(any)
 # }
+
+variable "health_check" {
+  type = map(string)
+  default = {
+    "timeout"             = "5"
+    "interval"            = "30"
+    "path"                = "/"
+    "port"                = "80"
+    "unhealthy_threshold" = "5"
+    "healthy_threshold"   = "2"
+  }
+}

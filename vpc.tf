@@ -39,6 +39,20 @@ locals {
     port        = 8080,
     cidr_blocks = ["0.0.0.0/0"],
   }]
+
+  alb_ports = [{
+    description = "HTTP",
+    port        = 80,
+    cidr_blocks = ["0.0.0.0/0"],
+    }, {
+    description = "HTTPS",
+    port        = 443,
+    cidr_blocks = ["0.0.0.0/0"],
+    }, {
+    description = "App",
+    port        = 8080,
+    cidr_blocks = ["0.0.0.0/0"],
+  }]
 }
 
 resource "aws_vpc" "project_vpc" {
@@ -217,6 +231,33 @@ resource "aws_security_group" "backend_cg" {
 
   tags = {
     Name = "Backend Security Group"
+  }
+}
+
+resource "aws_security_group" "alb_cg" {
+  name        = "ALB Security Group"
+  description = "ALB Security Group"
+  vpc_id      = aws_vpc.project_vpc.id
+
+  dynamic "ingress" {
+    for_each = local.alb_ports
+    content {
+      description = ingress.value.description
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
+      protocol    = "tcp"
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "ALB Security Group"
   }
 }
 
