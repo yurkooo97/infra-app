@@ -32,3 +32,9 @@ data "aws_iam_instance_profile" "aws_ec2_full_access" {
 data "aws_iam_instance_profile" "ecr_role" {
   name = "ecr_role"
 }
+
+data "aws_route53_zone" "eschool" {
+  name = "eschool-if.net"
+}
+
+

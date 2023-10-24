@@ -95,3 +95,10 @@ resource "aws_lb_target_group_attachment" "tg_attachment_backend" {
   port             = 8080
 }
 
+resource "aws_route53_record" "eschool" {
+  zone_id = data.aws_route53_zone.eschool.zone_id
+  name    = "www.eschool-if.net" # Your subdomain or domain
+  type    = "CNAME"
+  ttl     = "300"
+  records = [aws_lb.alb.dns_name]
+}
