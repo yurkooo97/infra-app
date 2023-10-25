@@ -115,7 +115,7 @@ resource "aws_instance" "Monitoring" {
 
   subnet_id = element(aws_subnet.subnet_public[*].id, 0)
 
-  vpc_security_group_ids = [aws_security_group.backend_cg.id]
+  vpc_security_group_ids = [aws_security_group.monitoring_cg]
 
   tags = {
     Name = "Monitoring"
@@ -137,9 +137,9 @@ resource "aws_db_instance" "db" {
 
   instance_class = "db.t3.micro"
 
-  username = "root"
+  username = var.rds_username
 
-  password = "password"
+  password = var.rds_password
 
   db_subnet_group_name = aws_db_subnet_group.db_subnet_group_private.name
 
