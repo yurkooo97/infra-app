@@ -28,6 +28,10 @@ locals {
     description = "HTTPS",
     port        = 443,
     cidr_blocks = ["0.0.0.0/0"],
+    }, {
+    description = "Node_exporter",
+    port        = 9100,
+    cidr_blocks = ["192.168.0.0/24"],
   }]
 
   backend_ports = [{
@@ -37,6 +41,24 @@ locals {
     }, {
     description = "App",
     port        = 8080,
+    cidr_blocks = ["0.0.0.0/0"],
+    }, {
+    description = "Node_exporter",
+    port        = 9100,
+    cidr_blocks = ["192.168.0.0/24"],
+  }]
+
+  monitoring_ports = [{
+    description = "SSH",
+    port        = 22,
+    cidr_blocks = ["0.0.0.0/0"],
+    }, {
+    description = "Prometheus",
+    port        = 9090,
+    cidr_blocks = ["0.0.0.0/0"],
+    }, {
+    description = "Grafana",
+    port        = 3000,
     cidr_blocks = ["0.0.0.0/0"],
   }]
 
@@ -231,6 +253,33 @@ resource "aws_security_group" "backend_cg" {
 
   tags = {
     Name = "Backend Security Group"
+  }
+}
+
+resource "aws_security_group" "monitoring_cg" {
+  name        = "Monitoring Security Group"
+  description = "Monitoring Security Group"
+  vpc_id      = aws_vpc.project_vpc.id
+
+  dynamic "ingress" {
+    for_each = local.monitoring_ports
+    content {
+      description = ingress.value.description
+      from_port   = ingress.value.port
+      to_port     = ingress.value.port
+      protocol    = "tcp"
+      cidr_blocks = ingress.value.cidr_blocks
+    }
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "Monitoring Security Group"
   }
 }
 
