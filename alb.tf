@@ -18,38 +18,49 @@ resource "aws_lb" "alb" {
   }
 }
 
-resource "aws_lb_listener" "frontend_listener_http" {
-  load_balancer_arn = aws_lb.alb.id
-  port              = "80"
-  protocol          = "HTTP"
-  default_action {
-    target_group_arn = aws_lb_target_group.frontend_tg.id
-    type             = "forward"
-  }
-}
-
-resource "aws_lb_listener" "backend_listener_http" {
-  load_balancer_arn = aws_lb.alb.id
-  port              = "8080"
-  protocol          = "HTTP"
-  default_action {
-    target_group_arn = aws_lb_target_group.backend_tg.id
-    type             = "forward"
-  }
-}
-
-# resource "aws_lb_listener" "lb_listner_https_test" {
-#   load_balancer_arn = aws_lb.sample_lb["test"].id
-#   port              = "443"
-#   protocol          = "HTTPS"
-#   ssl_policy        = "ELBSecurityPolicy-2016-08"
-#   certificate_arn   = "arn:aws:acm:us-west-2:989898989898:certificate/8a2a7d38-XXXX-4998-aaaa-XXXXX3d7ba"
+# resource "aws_lb_listener" "frontend_listener_http" {
+#   load_balancer_arn = aws_lb.alb.id
+#   port              = "80"
+#   protocol          = "HTTP"
 #   default_action {
-#      type             = "forward"
-#      target_group_arn = aws_lb_target_group.sample_tg["test"].id
+#     target_group_arn = aws_lb_target_group.frontend_tg.id
+#     type             = "forward"
 #   }
 # }
 
+# resource "aws_lb_listener" "backend_listener_http" {
+#   load_balancer_arn = aws_lb.alb.id
+#   port              = "8080"
+#   protocol          = "HTTP"
+#   default_action {
+#     target_group_arn = aws_lb_target_group.backend_tg.id
+#     type             = "forward"
+#   }
+# }
+
+resource "aws_lb_listener" "frontend_listner_https" {
+  load_balancer_arn = aws_lb.alb.id
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = "arn:aws:acm:eu-central-1:383523838589:certificate/47ba405f-1b78-4d4d-b5a8-fdb74edcb047"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.frontend_tg.id
+  }
+}
+
+resource "aws_lb_listener" "backend_listner_https" {
+  load_balancer_arn = aws_lb.alb.id
+  port              = "8080"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = "arn:aws:acm:eu-central-1:383523838589:certificate/47ba405f-1b78-4d4d-b5a8-fdb74edcb047"
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.backend_tg.id
+  }
+}
 
 resource "aws_lb_target_group" "frontend_tg" {
   name        = "Frontend-tg"
