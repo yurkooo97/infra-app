@@ -115,7 +115,7 @@ resource "aws_instance" "Monitoring" {
 
   subnet_id = element(aws_subnet.subnet_public[*].id, 0)
 
-  vpc_security_group_ids = [aws_security_group.monitoring_cg]
+  vpc_security_group_ids = [aws_security_group.monitoring_cg.id]
 
   tags = {
     Name = "Monitoring"
