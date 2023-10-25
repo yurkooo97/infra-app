@@ -1,0 +1,49 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: podman
+platforms:
+  - name: node_exporter_centos_8
+    image: docker.io/pycontribs/centos:8
+    pre_build_image: true
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: node_exporter_ubuntu_focal
+    image: docker.io/ubuntu:20.04
+    pre_build_image: false
+    privileged: true
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+  - name: node_exporter_ubuntu_bionic
+    image: docker.io/ubuntu:18.04
+    pre_build_image: false
+    privileged: true
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+lint: |
+  ansible-lint
+  yamllint -c .yamllint .
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      display_skipped_hosts: false
+  inventory:
+    host_vars:
+      centos:
+        ansible_user: ansible
+      ubuntu:
+        ansible_user: ansible

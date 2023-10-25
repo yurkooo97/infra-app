@@ -1,0 +1,11 @@
+---
+
+extends: default
+
+ignore: |
+  venv/
+  .roles/
+  .cache/
+
+skip_list:
+  - fqcn-builtins

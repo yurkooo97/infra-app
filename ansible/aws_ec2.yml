@@ -5,3 +5,8 @@ filters:
   tag:Name:
     - Frontend
     - Backend
+    - Monitoring
+
+keyed_groups:
+  - key: tags.Name
+    separator: ""

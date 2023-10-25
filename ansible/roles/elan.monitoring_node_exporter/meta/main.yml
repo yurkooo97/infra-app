@@ -1,0 +1,19 @@
+---
+
+galaxy_info:
+  role_name: monitoring_node_exporter
+  namespace: elan
+  author: Timo Nogueira Brockmeyer
+  description: install the node_exporter
+  company: virtUOS
+  license: BSD-3-Clause
+  min_ansible_version: 2.10
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - bionic
+    - name: EL
+      version:
+        - 8
+dependencies: []

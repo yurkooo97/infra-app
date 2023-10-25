@@ -1,0 +1,8 @@
+---
+- name: converge
+  hosts: all
+  become: true
+  tasks:
+    - name: include node_exporter
+      include_role:
+        name: monitoring_node_exporter

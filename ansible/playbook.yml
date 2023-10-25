@@ -13,4 +13,30 @@
         src: /home/ec2-user/ansible/stop_rm_containers.sh
         dest: /home/ec2-user/stop_rm_containers.sh
         mode: '0775'
+- name: Install Node Exporter
+  hosts: aws_ec2
+  become: true
+  roles:
+    - role: elan.monitoring_node_exporter
 
+- name: Install Prometheus
+  hosts: Monitoring
+  become: true
+  roles:
+    - role: cloudalchemy.prometheus
+  vars:
+    prometheus_targets:
+      node:
+      - targets:
+        - :9100
+        - :9100
+
+- name: Install Grafana
+  hosts: Monitoring
+  become: true
+  roles:
+    - role: cloudalchemy.grafana
+      vars:
+	grafana_security:
+          admin_user: admin
+          admin_password: admin

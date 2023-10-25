@@ -1,0 +1,9 @@
+---
+
+- name: Verify
+  hosts: all
+  gather_facts: false
+  tasks:
+  - name: check if node_exporter is active
+    command:  # noqa no-changed-when command-instead-of-module
+      cmd: systemctl is-active node_exporter
