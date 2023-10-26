@@ -38,5 +38,5 @@
     - role: cloudalchemy.grafana
       vars:
         grafana_security:
-          admin_user: 
-          admin_password: 
+          admin_user: admin
+          admin_password: admin
