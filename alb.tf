@@ -1,18 +1,14 @@
 resource "aws_lb" "alb" {
-  name               = "Eschool-alb"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = [aws_security_group.alb_cg.id]
-
-  enable_deletion_protection = false
-
+  name                             = "Eschool-alb"
+  internal                         = false
+  load_balancer_type               = "application"
+  security_groups                  = [aws_security_group.alb_cg.id]
+  enable_deletion_protection       = false
   enable_cross_zone_load_balancing = true
-
   subnets = [
     aws_subnet.subnet_public[0].id,
     aws_subnet.subnet_public[1].id
   ]
-
   tags = {
     Name = "Eschool-alb"
   }

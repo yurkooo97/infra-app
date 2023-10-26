@@ -5,7 +5,6 @@ provider "aws" {
 
 data "aws_availability_zones" "working" {}
 
-
 locals {
   cidr_block = "192.168.0.0/24"
   az_count   = length(data.aws_availability_zones.working.names)
@@ -85,8 +84,6 @@ resource "aws_vpc" "project_vpc" {
   }
 }
 
-
-
 resource "aws_subnet" "subnet_public" {
   count                   = local.az_count
   vpc_id                  = aws_vpc.project_vpc.id
@@ -112,7 +109,6 @@ resource "aws_subnet" "subnet_private" {
 resource "aws_db_subnet_group" "db_subnet_group_private" {
   name       = "db_subnet"
   subnet_ids = aws_subnet.subnet_private.*.id
-
   tags = {
     Name = "My DB subnet group"
   }
@@ -150,10 +146,8 @@ resource "aws_eip" "project_eip" {
 resource "aws_nat_gateway" "project_nat" {
   allocation_id = aws_eip.project_eip.id
   subnet_id     = element(aws_subnet.subnet_public.*.id, 0)
-
   tags = {
     Name = "Project NAT Gateway"
-
   }
 }
 
@@ -168,7 +162,6 @@ resource "aws_route_table" "project_rt_nat" {
   }
 }
 
-
 resource "aws_route_table_association" "project_rt_nat_asso" {
   count          = local.az_count
   subnet_id      = element(aws_subnet.subnet_private[*].id, count.index)
@@ -179,7 +172,6 @@ resource "aws_security_group" "bastion_cg" {
   name        = "Bastion Security Group"
   description = "Bastion Security Group"
   vpc_id      = aws_vpc.project_vpc.id
-
   dynamic "ingress" {
     for_each = local.bastion_ports
     content {
@@ -196,7 +188,6 @@ resource "aws_security_group" "bastion_cg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = {
     Name = "Bastion Security Group"
   }
@@ -206,7 +197,6 @@ resource "aws_security_group" "frontend_cg" {
   name        = "Frontend Security Group"
   description = "Frontend Security Group"
   vpc_id      = aws_vpc.project_vpc.id
-
   dynamic "ingress" {
     for_each = local.frontend_ports
     content {
@@ -223,7 +213,6 @@ resource "aws_security_group" "frontend_cg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = {
     Name = "Frontend Security Group"
   }
@@ -233,7 +222,6 @@ resource "aws_security_group" "backend_cg" {
   name        = "Backend Security Group"
   description = "Backend Security Group"
   vpc_id      = aws_vpc.project_vpc.id
-
   dynamic "ingress" {
     for_each = local.backend_ports
     content {
@@ -250,7 +238,6 @@ resource "aws_security_group" "backend_cg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = {
     Name = "Backend Security Group"
   }
@@ -260,7 +247,6 @@ resource "aws_security_group" "monitoring_cg" {
   name        = "Monitoring Security Group"
   description = "Monitoring Security Group"
   vpc_id      = aws_vpc.project_vpc.id
-
   dynamic "ingress" {
     for_each = local.monitoring_ports
     content {
@@ -277,7 +263,6 @@ resource "aws_security_group" "monitoring_cg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = {
     Name = "Monitoring Security Group"
   }
@@ -287,7 +272,6 @@ resource "aws_security_group" "alb_cg" {
   name        = "ALB Security Group"
   description = "ALB Security Group"
   vpc_id      = aws_vpc.project_vpc.id
-
   dynamic "ingress" {
     for_each = local.alb_ports
     content {
@@ -304,7 +288,6 @@ resource "aws_security_group" "alb_cg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = {
     Name = "ALB Security Group"
   }
@@ -314,7 +297,6 @@ resource "aws_security_group" "project_cg_rds" {
   name        = "Project Security Group RDS"
   description = "Project Security Group RDS"
   vpc_id      = aws_vpc.project_vpc.id
-
   ingress {
     from_port   = 3306
     to_port     = 3306
@@ -327,7 +309,6 @@ resource "aws_security_group" "project_cg_rds" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-
   tags = {
     Name = "Project Security Group RDS"
   }

@@ -17,24 +17,6 @@ variable "instance_type_medium" {
   type        = string
 }
 
-
-# variable "bastion_ports" {
-#   description = "list of ingress ports"
-#   default     = ["22"]
-#   type        = list(any)
-# }
-
-# variable "frontend_ports" {
-#   description = "list of ingress ports"
-#   port      = 22
-# }
-
-# variable "backend_ports" {
-#   description = "list of ingress ports"
-#   default     = ["22, 8080"]
-#   type        = list(any)
-# }
-
 variable "health_check" {
   type = map(string)
   default = {
@@ -49,12 +31,12 @@ variable "health_check" {
 
 variable "rds_username" {
   description = "enter the rds_username"
-  default     = ""
+  default     = "root"
   type        = string
 }
 
 variable "rds_password" {
   description = "enter the rds_password"
-  default     = ""
+  default     = "password"
   type        = string
 }
