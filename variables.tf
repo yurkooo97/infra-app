@@ -31,12 +31,12 @@ variable "health_check" {
 
 variable "rds_username" {
   description = "enter the rds_username"
-  default     = "root"
+  default     = ""
   type        = string
 }
 
 variable "rds_password" {
   description = "enter the rds_password"
-  default     = "password"
+  default     = ""
   type        = string
 }
