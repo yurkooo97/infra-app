@@ -113,7 +113,7 @@ resource "aws_instance" "Monitoring" {
 
   key_name = aws_key_pair.bastion_auth.key_name
 
-  subnet_id = element(aws_subnet.subnet_public[*].id, 0)
+  subnet_id = element(aws_subnet.subnet_private[*].id, 0)
 
   vpc_security_group_ids = [aws_security_group.monitoring_cg.id]
 
