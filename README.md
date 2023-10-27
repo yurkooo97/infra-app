@@ -17,10 +17,19 @@ export AWS_ACCESS_KEY_ID=your_aws_access_key
 export AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
 ```
 
-4. Use the Terraform commands below in working directory to initialize Terraform configuration, plan and provision the infrastructure:
+5. Use the Terraform commands below in working directory to initialize Terraform configuration, plan and provision the infrastructure:
 
 ```ts
 terraform init
 terraform plan
 terraform apply
 ```
+6. Connect to Bastion via SSH and run Ansible commands:
+
+```ts
+ansible-inventory -i aws_ec2.yml --list
+ansible aws_ec2 -i aws_ec2.yml -m ping --private-key=~/.ssh/bastion
+ansible aws_ec2 -i aws_ec2.yml -m ping --private-key=~/.ssh/bastion
+```
+Note!
+Before running commands above, set the ip or hostnames in ~/ansible/playbook.yml in prometheus variables to have connection with node exporters!
