@@ -8,8 +8,9 @@ Terraform version more than 1.1.0, or less than 1.5.6
 
 ## Getting started
 1. Clone this repo to your local environment.
-2. Set your region (eu-central-1 by defult) database username and password in _variables.tf_ > rds_username > default="" and _variables.tf_ > rds_password > default="".
-3. Allow Terraform to connect and authenticate successfully to AWS by creating new IAM user or use existing one and copy the access key and the secret key. Set the environment variables in your current terminal session by executing the following commands:
+2. Generate the ssh key or use existing one to add it _to main.tf_ > bastion_auth
+3. Set your region (eu-central-1 by defult) database username and password in _variables.tf_ > rds_username > default="" and _variables.tf_ > rds_password > default="".
+4. Allow Terraform to connect and authenticate successfully to AWS by creating new IAM user or use existing one and copy the access key and the secret key. Set the environment variables in your current terminal session by executing the following commands:
    
 ```ts
 export AWS_ACCESS_KEY_ID=your_aws_access_key
