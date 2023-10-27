@@ -19,6 +19,7 @@ Also instance profiles are using for Ansible access to instances (aws_ec2_full_a
 ```ts
 export AWS_ACCESS_KEY_ID=your_aws_access_key
 export AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
+```
 
 3. Use the Terraform commands below in working directory to initialize Terraform configuration, plan and provision the infrastructure:
 
@@ -26,3 +27,4 @@ export AWS_SECRET_ACCESS_KEY=your_aws_secret_access_key
 terraform init
 terraform plan
 terraform apply
+```
