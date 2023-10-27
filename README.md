@@ -6,11 +6,6 @@ This project allows to provision the infrastructure by Terraform using AWS as a 
 ## Requirements
 Terraform version more than 1.1.0, or less than 1.5.6
 
-
-## IMPORTANT!
-For proper https access to web application the ssl certificate is needed, otherwise uncomment the ALB listeners in _alb.tf_ to have access througt load balancer by http!
-Also instance profiles are using for Ansible access to instances (aws_ec2_full_access) and for CI/CD to login to ECR (ecr_role). It's needed to create them with appropriate policies, or use IAM user credentials.
-
 ## Getting started
 1.Clone this repo to your local environment.
 2. Set your region (eu-central-1 by defult) database username and password in _variables.tf_ > rds_username > default="" and _variables.tf_ > rds_password > default="".
@@ -28,3 +23,6 @@ terraform init
 terraform plan
 terraform apply
 ```
+## IMPORTANT!
+For proper https access to web application the ssl certificate is needed, otherwise uncomment the ALB listeners in _alb.tf_ to have access througt load balancer by http!
+Also instance profiles are using for Ansible access to instances (aws_ec2_full_access) and for CI/CD to login to ECR (ecr_role). It's needed to create them with appropriate policies, or use IAM user credentials.
