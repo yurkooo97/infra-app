@@ -23,6 +23,3 @@ terraform init
 terraform plan
 terraform apply
 ```
-## IMPORTANT!
-For proper https access to web application the ssl certificate is needed, otherwise uncomment the ALB listeners in _alb.tf_ to have access througt load balancer by http!
-Also instance profiles are using for Ansible access to instances (aws_ec2_full_access) and for CI/CD to login to ECR (ecr_role). It's needed to create them with appropriate policies, or use IAM user credentials.
