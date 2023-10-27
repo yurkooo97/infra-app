@@ -33,6 +33,6 @@ ansible aws_ec2 -i aws_ec2.yml -m ping --private-key=~/.ssh/bastion
 
 ...
 Note!
-Before running commands above, set the ip or hostnames in ~/ansible/playbook.yml in prometheus variables to have connection with node exporters!
+Before running commands above, set the targets ip or hostnames in ~/ansible/playbook.yml in prometheus variables to have connection with node exporters!
 ...
 ```
